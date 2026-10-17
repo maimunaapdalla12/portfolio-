@@ -11,8 +11,11 @@ const app = Init_App();
 
 const port = process.env.PORT;
 
-app.listen(port, () => {
-  console.log(
+
+
+
+app.listen(port, "0.0.0.0", () => {
+ console.log(
     chalk.blue.bold(`server is running on: ${chalk.gray.bold(port)}`)
   );
 });
