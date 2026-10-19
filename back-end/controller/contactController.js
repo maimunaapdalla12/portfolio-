@@ -3,6 +3,8 @@ import Contact from "../models/contactmodel.js";
 import sendEmail from "../utils/sendEmail.js";
 
 export const createContact = async (req, res) => {
+  console.log("CONTACT ROUTE REACHED");
+
   try {
     const { name, email, message } = req.body;
 
@@ -19,24 +21,18 @@ export const createContact = async (req, res) => {
       message,
     });
 
-    await sendEmail({
-      name,
-      email,
-      message,
-    });
-   console.log("CONTACT ROUTE REACHED");
-console.log("Request body:", req.body);
+    console.log("Contact saved successfully");
+
     return res.status(201).json({
       success: true,
-      message: "Message sent successfully",
+      message: "Message saved successfully",
       data: contact,
     });
   } catch (error) {
-    console.error(error);
+    console.error("Contact error:", error.message);
 
     return res.status(500).json({
       success: false,
-      message: "Failed to send message",
+      message: "Failed to save message",
     });
-  }
-};
+  }}
