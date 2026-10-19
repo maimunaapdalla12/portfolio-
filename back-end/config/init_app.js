@@ -17,7 +17,7 @@ const Init_App = () => {
   const app = express();
 
   const whitelist = [
-    "http://localhost:2545",
+    "https://portfolio-snowy-nine-f8p302z7c8.vercel.app/",
   ];
 
   const corsOptions = {
