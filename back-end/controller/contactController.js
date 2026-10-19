@@ -1,3 +1,4 @@
+import { log } from "console";
 import Contact from "../models/contactmodel.js";
 import sendEmail from "../utils/sendEmail.js";
 
@@ -23,7 +24,8 @@ export const createContact = async (req, res) => {
       email,
       message,
     });
-
+   console.log("CONTACT ROUTE REACHED");
+console.log("Request body:", req.body);
     return res.status(201).json({
       success: true,
       message: "Message sent successfully",
