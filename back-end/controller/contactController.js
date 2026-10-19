@@ -1,4 +1,4 @@
-import { log } from "console";
+
 import Contact from "../models/contactmodel.js";
 import sendEmail from "../utils/sendEmail.js";
 
@@ -15,6 +15,7 @@ export const createContact = async (req, res) => {
       });
     }
 
+  
     const contact = await Contact.create({
       name,
       email,
@@ -23,9 +24,15 @@ export const createContact = async (req, res) => {
 
     console.log("Contact saved successfully");
 
+  
+    await sendEmail({ name, email, message });
+
+    console.log("Email sent successfully");
+
+
     return res.status(201).json({
       success: true,
-      message: "Message saved successfully",
+      message: "Message saved and email sent successfully",
       data: contact,
     });
   } catch (error) {
@@ -33,6 +40,7 @@ export const createContact = async (req, res) => {
 
     return res.status(500).json({
       success: false,
-      message: "Failed to save message",
+      message: "Message could not be processed",
     });
-  }}
+  }
+};
