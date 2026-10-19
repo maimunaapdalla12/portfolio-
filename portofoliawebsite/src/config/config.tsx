@@ -1,7 +1,7 @@
 
 import axios from "axios";
 
-export const api = "http://localhost:4500";
+export const api = "https://portfolio-2-g2bw.onrender.com";
 
 const instance = axios.create({
   baseURL: api,

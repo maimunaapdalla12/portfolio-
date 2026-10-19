@@ -1,5 +1,6 @@
 
 import { useState } from "react";
+import toast from "react-hot-toast";
 import SectionTitle from "./SectionTitle";
 import ContactLine from "./ContactLine";
 import instance from "../config/config";
@@ -12,10 +13,6 @@ function Contact() {
   });
 
   const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState({
-    type: "",
-    message: "",
-  });
 
   const handleChange = (e) => {
     setFormData({
@@ -26,24 +23,19 @@ function Contact() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setStatus({ type: "", message: "" });
 
     if (
       !formData.name.trim() ||
       !formData.email.trim() ||
       !formData.message.trim()
     ) {
-      setStatus({
-        type: "error",
-        message: "Fadlan buuxi dhammaan meelaha bannaan.",
-      });
+      toast.error("Fadlan buuxi dhammaan meelaha bannaan.");
       return;
     }
 
     try {
       setLoading(true);
 
-      // U dir xogta backend-ka
       const response = await instance.post("/contact", {
         name: formData.name.trim(),
         email: formData.email.trim(),
@@ -51,10 +43,7 @@ function Contact() {
       });
 
       if (response.data.success) {
-        setStatus({
-          type: "success",
-          message: "Fariintaada si guul leh ayaa loo diray!",
-        });
+        toast.success("Fariintaada si guul leh ayaa loo diray!");
 
         setFormData({
           name: "",
@@ -62,33 +51,22 @@ function Contact() {
           message: "",
         });
       } else {
-        setStatus({
-          type: "error",
-          message: response.data.message || "Fariinta lama dirin.",
-        });
+        toast.error(response.data.message || "Fariinta lama dirin.");
       }
     } catch (error) {
-      console.error(
-        "Contact form error:",
-        error.response?.data?.message || error.message
-      );
+      console.error("Contact form error:", error);
 
-      setStatus({
-        type: "error",
-        message:
-          error.response?.data?.message ||
-          "Fariinta lama dirin. Fadlan mar kale isku day.",
-      });
+      toast.error(
+        error.response?.data?.message ||
+          "Fariinta lama dirin. Fadlan mar kale isku day."
+      );
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <section
-      id="contact"
-      className="mx-auto max-w-6xl px-5 py-24"
-    >
+    <section id="contact" className="mx-auto max-w-6xl px-5 py-24">
       <SectionTitle title="Get in touch" />
 
       <div className="mt-16 grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
@@ -107,16 +85,11 @@ function Contact() {
               icon="M"
               text="maimaaabdalla@gmail.com"
             />
-
             <ContactLine
               icon="P"
               text="WhatsApp: +252 686641953"
             />
-
-            <ContactLine
-              icon="L"
-              text="SOMAALIA"
-            />
+            <ContactLine icon="L" text="SOMAALIA" />
           </div>
         </div>
 
@@ -137,10 +110,10 @@ function Contact() {
             <span className="font-semibold">Your Email</span>
             <input
               name="email"
+              type="email"
               value={formData.email}
               onChange={handleChange}
               required
-              type="email"
               className="mt-3 w-full rounded border border-zinc-200 bg-zinc-100 px-5 py-4 outline-none transition focus:border-cyan-400"
               placeholder="your@email.com"
             />
@@ -160,24 +133,10 @@ function Contact() {
             />
           </label>
 
-          {status.message && (
-            <p
-              role="status"
-              aria-live="polite"
-              className={
-                status.type === "success"
-                  ? "rounded-lg bg-green-100 p-3 text-green-800"
-                  : "rounded-lg bg-red-100 p-3 text-red-800"
-              }
-            >
-              {status.message}
-            </p>
-          )}
-
           <button
             disabled={loading}
-            className="rounded-full bg-gradient-to-r from-cyan-100 to-cyan-200 px-8 py-4 font-semibold text-zinc-900 shadow-lg shadow-cyan-200/70 transition hover:scale-105 disabled:cursor-not-allowed disabled:opacity-60"
             type="submit"
+            className="rounded-full bg-gradient-to-r from-cyan-100 to-cyan-200 px-8 py-4 font-semibold text-zinc-900 shadow-lg shadow-cyan-200/70 transition hover:scale-105 disabled:cursor-not-allowed disabled:opacity-60"
           >
             {loading ? "Sending..." : "Submit now"}
           </button>

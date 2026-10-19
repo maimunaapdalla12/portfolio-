@@ -1,4 +1,4 @@
 
-export const Send_sms = "send_sms";
+export const Send_sms = "contact";
 
 
