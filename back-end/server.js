@@ -9,7 +9,12 @@ dotenv.config();
 
 const app = Init_App();
 const port = process.env.PORT || 4500;
-
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "API is working",
+  });
+});
 app.listen(port, '0.0.0.0', () => {
   console.log(
     chalk.blue.bold(`Server is running on port: ${port}`)
