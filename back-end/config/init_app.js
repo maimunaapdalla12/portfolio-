@@ -9,7 +9,7 @@ import device from "express-device";
 import cookieParser from "cookie-parser";
 
 import sendMail from "../Routers/sendMail.js";
-import contactRoutes from "../Routers/sendMail.js";
+
 
 dotenv.config();
 
@@ -17,7 +17,8 @@ const Init_App = () => {
   const app = express();
 
   const whitelist = [
-    "https://portfolio-snowy-nine-f8p302z7c8.vercel.app/",
+   "https://portfolio-snowy-nine-f8p302z7c8.vercel.app",
+  "https://portfolio-ct00sp73g-maisahabdallah14-5985s-projects.vercel.app",
   ];
 
   const corsOptions = {
@@ -44,7 +45,7 @@ const Init_App = () => {
   app.use(express.json());
 
   sendMail(app);
-  contactRoutes(app);
+
 
   return app;
 };
